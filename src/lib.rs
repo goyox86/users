@@ -194,6 +194,18 @@ pub struct User {
 }
 
 impl User {
+    pub fn new(new_user: String, new_hash: Option<(String, Option<Encoded>)>, new_uid: usize, new_gid: usize, new_name: String, new_home: String, new_shell: String, new_auth_delay: Duration) -> Result<User> {
+        Ok(User{user: new_user,
+                hash: new_hash,
+                uid: new_uid,
+                gid: new_gid,
+                name: new_name,
+                home: new_home,
+                shell: new_shell,
+                auth_delay: new_auth_delay,
+        })
+    }
+
     /// Set the password for a user. Make sure the password you have
     /// received is actually what the user wants as their password (this doesn't).
     ///
