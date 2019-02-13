@@ -194,14 +194,16 @@ pub struct User {
 }
 
 impl User {
-    pub fn new(new_user: String, new_hash: Option<(String, Option<Encoded>)>, new_uid: usize, new_gid: usize, new_name: String, new_home: String, new_shell: String, new_auth_delay: Duration) -> Result<User> {
-        Ok(User{user: new_user,
+    pub fn new(new_user: Option<String>, new_hash: Option<(String, Option<Encoded>)>, new_uid: Option<usize>, new_gid: Option<usize>, new_name: Option<String>, new_home: Option<String>, new_shell: Option<String>, new_auth_delay: Duration) -> Result<User> {
+
+    
+        Ok(User{user: new_user.unwrap_or("default login name".to_string()),
                 hash: new_hash,
-                uid: new_uid,
-                gid: new_gid,
-                name: new_name,
-                home: new_home,
-                shell: new_shell,
+                uid: new_uid.unwrap_or(1),
+                gid: new_gid.unwrap_or(2),
+                name: new_name.unwrap_or("default surname".to_string()),
+                home: new_home.unwrap_or("home".to_string()),
+                shell: new_shell.unwrap_or("~/".to_string()),
                 auth_delay: new_auth_delay,
         })
     }
