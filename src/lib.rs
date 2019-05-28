@@ -194,18 +194,47 @@ pub struct User {
 }
 
 impl User {
-    pub fn new(new_user: Option<String>, new_hash: Option<Option<(String, Option<Encoded>)>>, new_uid: Option<usize>, new_gid: Option<usize>, new_name: Option<String>, new_home: Option<String>, new_shell: Option<String>, new_auth_delay: Option<Duration>) -> Result<User> {
-
-        Ok(User{user: new_user.unwrap_or("default user name".to_string()),
-                hash: new_hash.unwrap_or(None),
-                uid: new_uid.unwrap_or(0),
-                gid: new_gid.unwrap_or(0),
-                name: new_name.unwrap_or("default surname".to_string()),
-                home: new_home.unwrap_or("/home".to_string()),
-                shell: new_shell.unwrap_or("~/".to_string()),
-                auth_delay: new_auth_delay.unwrap_or(Duration::default()),
-        })
+    pub fn new() -> User {
+        User{user: "default user name".to_string(),
+                hash: None,
+                uid: 0,
+                gid: 0,
+                name: "default surname".to_string(),
+                home: "/home".to_string(),
+                shell: "~/".to_string(),
+                auth_delay: Duration::default(),
+        }
     }
+
+    pub fn set_user_name(&mut self, new_user_name: String) {
+        self.user = new_user_name
+    }
+
+    pub fn set_hash(&mut self, new_hash: Option<(String, Option<Encoded>)>) {
+        self.hash = new_hash
+    }
+
+    pub fn set_uid(&mut self, new_uid: usize) {
+        self.uid = new_uid
+    }
+
+    pub fn set_gid(&mut self, new_gid: usize) {
+        self.gid = new_gid
+    }
+
+    pub fn set_new_home(&mut self, new_home: String) {
+        self.home = new_home
+    }
+
+    pub fn set_new_shell(&mut self, new_shell: String) {
+        self.shell = new_shell
+    }
+
+    pub fn set_new_auth_delay(&mut self, new_auth_delay: Duration) {
+        self.auth_delay = new_auth_delay
+    }
+
+
 
     /// Set the password for a user. Make sure the password you have
     /// received is actually what the user wants as their password (this doesn't).
