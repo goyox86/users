@@ -194,44 +194,52 @@ pub struct User {
 }
 
 impl User {
-    pub fn new() -> User {
-        User{user: "default user name".to_string(),
+    pub fn new(new_user: String, new_uid: usize, new_gid: usize, new_name: String, new_home: String, new_shell: String, new_auth_delay: Duration) -> Result<User> {
+        Ok(User{user: new_user,
                 hash: None,
-                uid: 0,
-                gid: 0,
-                name: "default surname".to_string(),
-                home: "/home".to_string(),
-                shell: "~/".to_string(),
-                auth_delay: Duration::default(),
-        }
+                uid: new_uid,
+                gid: new_gid,
+                name: new_name,
+                home: new_home,
+                shell: new_shell,
+                auth_delay: new_auth_delay,
+        })
     }
 
-    pub fn set_user_name(&mut self, new_user_name: String) {
-        self.user = new_user_name
+
+    pub fn user_name(&mut self, new_user_name: String) -> &mut User {
+        self.user = new_user_name;
+        self
     }
 
-    pub fn set_hash(&mut self, new_hash: Option<(String, Option<Encoded>)>) {
-        self.hash = new_hash
+    pub fn hash(&mut self, new_hash: (String, bool)) -> &mut User {
+        self.hash = Some(new_hash);
+        self
     }
 
-    pub fn set_uid(&mut self, new_uid: usize) {
-        self.uid = new_uid
+    pub fn uid(&mut self, new_uid: usize) -> &mut User {
+        self.uid = new_uid;
+        self
     }
 
-    pub fn set_gid(&mut self, new_gid: usize) {
-        self.gid = new_gid
+    pub fn gid(&mut self, new_gid: usize) -> &mut User {
+        self.gid = new_gid;
+        self
     }
 
-    pub fn set_new_home(&mut self, new_home: String) {
-        self.home = new_home
+    pub fn home(&mut self, new_home: String) -> &mut User {
+        self.home = new_home;
+        self
     }
 
-    pub fn set_new_shell(&mut self, new_shell: String) {
-        self.shell = new_shell
+    pub fn shell(&mut self, new_shell: String) -> &mut User {
+        self.shell = new_shell;
+        self
     }
 
-    pub fn set_new_auth_delay(&mut self, new_auth_delay: Duration) {
-        self.auth_delay = new_auth_delay
+    pub fn auth_delay(&mut self, new_auth_delay: Duration) -> &mut User {
+        self.auth_delay = new_auth_delay;
+        self
     }
 
 
