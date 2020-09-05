@@ -194,56 +194,6 @@ pub struct User {
 }
 
 impl User {
-    pub fn new(new_user: String, new_uid: usize, new_gid: usize, new_name: String, new_home: String, new_shell: String, new_auth_delay: Duration) -> Result<User> {
-        Ok(User{user: new_user,
-                hash: None,
-                uid: new_uid,
-                gid: new_gid,
-                name: new_name,
-                home: new_home,
-                shell: new_shell,
-                auth_delay: new_auth_delay,
-        })
-    }
-
-
-    pub fn user_name(&mut self, new_user_name: String) -> &mut User {
-        self.user = new_user_name;
-        self
-    }
-
-    pub fn hash(&mut self, new_hash: (String, bool)) -> &mut User {
-        self.hash = Some(new_hash);
-        self
-    }
-
-    pub fn uid(&mut self, new_uid: usize) -> &mut User {
-        self.uid = new_uid;
-        self
-    }
-
-    pub fn gid(&mut self, new_gid: usize) -> &mut User {
-        self.gid = new_gid;
-        self
-    }
-
-    pub fn home(&mut self, new_home: String) -> &mut User {
-        self.home = new_home;
-        self
-    }
-
-    pub fn shell(&mut self, new_shell: String) -> &mut User {
-        self.shell = new_shell;
-        self
-    }
-
-    pub fn auth_delay(&mut self, new_auth_delay: Duration) -> &mut User {
-        self.auth_delay = new_auth_delay;
-        self
-    }
-
-
-
     /// Set the password for a user. Make sure the password you have
     /// received is actually what the user wants as their password (this doesn't).
     ///
@@ -398,6 +348,78 @@ impl User {
         if self.hash.is_none() {
             panic!("Hash not populated!");
         }
+    }
+}
+
+struct UserBuilder {
+    user: String,
+    hash: Option<(String, bool)>,
+    uid: usize,
+    gid: usize,
+    name: String,
+    home: String,
+    shell: String,
+    auth_delay: Duration
+}
+
+impl UserBuilder {
+    pub fn new(new_user: String, new_uid: usize, new_gid: usize, new_name: String, new_home: String, new_shell: String, new_auth_delay: Duration) -> Result<UserBuilder> {
+        Ok(UserBuilder{user: new_user,
+                hash: None,
+                uid: new_uid,
+                gid: new_gid,
+                name: new_name,
+                home: new_home,
+                shell: new_shell,
+                auth_delay: new_auth_delay,
+        })
+    }
+
+    pub fn user_name(&mut self, new_user_name: String) -> &mut UserBuilder {
+        self.user = new_user_name;
+        self
+    }
+
+    pub fn hash(&mut self, new_hash: (String, bool)) -> &mut UserBuilder {
+        self.hash = Some(new_hash);
+        self
+    }
+
+    pub fn uid(&mut self, new_uid: usize) -> &mut UserBuilder {
+        self.uid = new_uid;
+        self
+    }
+
+    pub fn gid(&mut self, new_gid: usize) -> &mut UserBuilder {
+        self.gid = new_gid;
+        self
+    }
+
+    pub fn home(&mut self, new_home: String) -> &mut UserBuilder {
+        self.home = new_home;
+        self
+    }
+
+    pub fn shell(&mut self, new_shell: String) -> &mut UserBuilder {
+        self.shell = new_shell;
+        self
+    }
+
+    pub fn auth_delay(&mut self, new_auth_delay: Duration) -> &mut UserBuilder {
+        self.auth_delay = new_auth_delay;
+        self
+    }
+
+    pub fn build(self) -> Result<User> {
+        Ok(User{user: self.user,
+                hash: self.hash,
+                uid: self.uid,
+                gid: self.gid,
+                name: self.name,
+                home: self.home,
+                shell: self.shell,
+                auth_delay: self.auth_delay,
+        })
     }
 }
 
